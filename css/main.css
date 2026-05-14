@@ -12,8 +12,11 @@ header {
   text-align: center;
   font-family: verdana;
   padding: 8px 25px 10px;
-  background-color: rgb(105, 105, 105);
+  background-color: rgb(0, 0, 0);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  left: 0;
 }
 
 .logo {
@@ -26,13 +29,13 @@ header {
   height: 400px;
 }
 
-.SZA {
-  width: 150px;
+.gall {
+  width: 440px;
   height: auto;
-  display: block;
-  margin: 20px auto;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
+  padding: 25px 15px;
+  box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgb(160, 160, 160);
 }
 
 h1 {
@@ -71,7 +74,7 @@ h2 {
 }
 
 .nav a {
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   text-decoration: none;
 }
 
@@ -105,4 +108,20 @@ text-align: left;
   margin-left: 65%;
   width: 600px;
   height: auto;
+}
+
+.view-art {
+  display: block;
+  margin-left: 32%;
+  padding: 10px 20px;
+  font-size: 18px;
+  color: rgb(99, 212, 187);
+  background-color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.gallery {
+  padding: 40px 60px;
 }
