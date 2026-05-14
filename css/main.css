@@ -30,7 +30,7 @@ header {
 }
 
 .gall {
-  width: 440px;
+  width: 280px;
   height: auto;
   text-align: center;
   padding: 25px 15px;
@@ -41,7 +41,7 @@ header {
 }
 
 .gall:hover {
-  width: 460px;
+  width: 300px;
   height: auto;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
 }
