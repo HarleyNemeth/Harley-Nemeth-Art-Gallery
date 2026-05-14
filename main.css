@@ -1,18 +1,18 @@
 body {
   margin: 0;
-  background-color: rgb(219, 252, 245);
+  background-color: rgb(235, 255, 251);
   /*opacity: 0.3;*/
 }
 /*test*/
 header {
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   display: flex;
   align-items: center;
   justify-content: space-between;
   text-align: center;
   font-family: verdana;
   padding: 8px 25px 10px;
-  background-color: rgb(187, 199, 196);
+  background-color: rgb(105, 105, 105);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -23,7 +23,7 @@ header {
 
 h1 {
   font-size: 80px;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   text-align: center;
   margin: 0;
   height: auto;
@@ -41,11 +41,21 @@ h1 {
 
 .nav li {
   margin: 0;
+  transition: color 0.3s ease;
+}
+
+.nav li:hover {
+  color: rgb(255, 255, 255);
 }
 
 .nav a {
-  color: inherit;
+  color: rgb(0, 0, 0);
   text-decoration: none;
+}
+
+.nav a:hover,
+.nav a.active {
+  color: rgb(255, 255, 255);
 }
 
 p {
