@@ -36,6 +36,21 @@ header {
   padding: 25px 15px;
   box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.1);
   border: 1px solid rgb(160, 160, 160);
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.gall:hover {
+  width: 460px;
+  height: auto;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.gall p {
+  font-size: 18px;
+  color: rgb(0, 0, 0);
+  font-family: verdana;
+  padding: 10px;
 }
 
 h1 {
@@ -124,4 +139,12 @@ text-align: left;
 
 .gallery {
   padding: 40px 60px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.art-item {
+  text-align: center;
 }
