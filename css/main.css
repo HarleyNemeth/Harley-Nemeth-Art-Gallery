@@ -53,6 +53,14 @@ header {
   padding: 10px;
 }
 
+.featured {
+  width: 600px;
+  height: auto;
+  text-align: center;
+  padding: 25px 15px;
+  margin: 20px 33%;
+}
+
 h1 {
   font-size: 50px;
   color: rgb(99, 212, 187);
@@ -105,8 +113,7 @@ p {
 }
 
 .p2 {
-  margin-left: 10%;
-  margin-right: 40%;
+  margin: 0;
   font-family: verdana;
   font-size: 20px;
 }
@@ -119,15 +126,30 @@ text-align: left;
   font-size: 20px;
 }
 
+.about-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px 0;
+}
+
+.about-copy {
+  max-width: 560px;
+}
+
 .about {
-  margin-left: 65%;
-  width: 600px;
+  max-width: 650px;
+  width: 100%;
   height: auto;
+  margin-left: 150px;
 }
 
 .view-art {
-  display: block;
-  margin-left: 32%;
+  display: inline-block;
+  margin-top: 20px;
+  margin-left: 220px;
   padding: 10px 20px;
   font-size: 18px;
   color: rgb(99, 212, 187);
