@@ -22,4 +22,26 @@ document.addEventListener('DOMContentLoaded', function() {
       link.classList.remove('active');
     }
   });
+
+  // Hover video: play on enter, pause/reset on leave
+  const mediaContainers = document.querySelectorAll('.media-container');
+  mediaContainers.forEach(container => {
+    const video = container.querySelector('video.hover-video');
+    if (!video) return;
+
+    container.addEventListener('mouseenter', () => {
+      try {
+        video.currentTime = 0;
+        const p = video.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+      } catch (e) {}
+    });
+
+    container.addEventListener('mouseleave', () => {
+      try {
+        video.pause();
+        video.currentTime = 0;
+      } catch (e) {}
+    });
+  });
 });

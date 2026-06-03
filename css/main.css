@@ -72,10 +72,11 @@ header {
   border-radius: 15px;
   margin: 20px 50px;
   overflow: hidden;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .gall img {
@@ -92,6 +93,41 @@ header {
 
 .gall:hover img {
   transform: scale(1.1);
+}
+
+/* Media container: supports both image and optional hover video */
+.media-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.media-container img,
+.media-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease, opacity 0.25s ease;
+}
+
+.media-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* When hovering the whole gall container, scale media and reveal video (if present) */
+.gall:hover .media-container img,
+.gall:hover .media-container video {
+  transform: scale(1.1);
+}
+
+.gall:hover .media-container video {
+  opacity: 1;
 }
 
 .gall p {
@@ -151,9 +187,18 @@ h3 {
 .nav a {
   color: rgb(255, 255, 255);
   text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
 }
 
-.nav a:hover,
+.nav a:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgba(99, 212, 187, 0.18);
+  transform: translateY(-1px);
+}
+
 .nav a.active {
   color: rgb(99, 212, 187);
 }
@@ -208,9 +253,16 @@ text-align: left;
   font-size: 18px;
   color: rgb(99, 212, 187);
   background-color: rgb(75, 74, 74);
-  border: none;
+  border: 1px solid transparent;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.view-art:hover {
+  color: #ffffff;
+  background-color: rgb(99, 212, 187);
+  transform: translateY(-2px);
 }
 
 .gallery {
@@ -231,4 +283,14 @@ text-align: left;
   align-items: center;
   justify-content: center;
   padding: 20px 0;
+}
+
+.social a {
+  color: rgb(75, 74, 74);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.social a:hover {
+  color: rgb(99, 212, 187);
+  transform: translateY(-2px);
 }
