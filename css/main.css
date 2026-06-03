@@ -205,11 +205,12 @@ header {
 }
 
 .featured {
-  width: 600px;
+  max-width: 600px;
+  width: 100%;
   height: auto;
   text-align: center;
   padding: 25px 15px;
-  margin: 20px 33%;
+  margin: 0 auto;
 }
 
 h1 {
@@ -223,9 +224,8 @@ h1 {
 h2 {
   font-size: 60px;
   color: rgb(0, 0, 0);
-  margin-left: 20%;
-  display: flex;
-  height: auto;
+  text-align: center;
+  margin: 0 0 1rem;
   font-family: verdana;
 }
 
@@ -233,9 +233,7 @@ h3 {
   font-size: 30px;
   color: rgb(0, 0, 0);
   text-align: center;
-  display: flex;
-  margin: 10px;
-  margin-left: 47.5%;
+  margin: 10px auto;
   height: auto;
   font-family: verdana;
 }
@@ -252,8 +250,6 @@ p {
   margin: 0;
   font-family: verdana;
   font-size: 20px;
-  margin-left: 20%;
-  margin-right: 20%;
 }
 .fa-solid {
   margin-right: 0.35rem;
@@ -265,11 +261,6 @@ text-align: left;
 }
 
 .about-section {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
   padding: 20px 0;
 }
 
@@ -281,13 +272,11 @@ text-align: left;
   max-width: 650px;
   width: 100%;
   height: auto;
-  margin-left: 150px;
 }
 
 .view-art {
   display: inline-block;
   margin-top: 20px;
-  margin-left: 220px;
   padding: 10px 20px;
   font-size: 18px;
   color: rgb(99, 212, 187);
