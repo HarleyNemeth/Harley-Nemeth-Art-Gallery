@@ -1,47 +1,41 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const scrollBtn = document.getElementById('scroll-featured');
-  const featuredSection = document.getElementById('featured-art');
+document.addEventListener('DOMContentLoaded', () => {
+  const scrollBtn = document.querySelector('#scroll-featured');
+  const featuredSection = document.querySelector('#featured-art');
 
   if (scrollBtn && featuredSection) {
-    scrollBtn.addEventListener('click', function() {
+    scrollBtn.addEventListener('click', () => {
       featuredSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
 
-  const navLinks = document.querySelectorAll('.nav a');
-  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.media-container').forEach(container => {
+    const hoverVideoUrl = container.dataset.hoverVideo;
+    let video = container.querySelector('video.hover-video');
 
-  navLinks.forEach(function(link) {
-    const href = link.getAttribute('href');
-    if (!href) return;
-
-    const targetPage = href.split('/').pop() || 'index.html';
-    if (targetPage === currentPage) {
-      link.classList.add('active');
-    } else {
-      link.classList.remove('active');
+    if (hoverVideoUrl && !video) {
+      video = document.createElement('video');
+      video.className = 'hover-video';
+      video.src = hoverVideoUrl;
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.preload = 'metadata';
+      container.appendChild(video);
     }
-  });
 
-  // Hover video: play on enter, pause/reset on leave
-  const mediaContainers = document.querySelectorAll('.media-container');
-  mediaContainers.forEach(container => {
-    const video = container.querySelector('video.hover-video');
-    if (!video) return;
+    if (!video) {
+      return;
+    }
 
+    container.classList.add('has-video');
     container.addEventListener('mouseenter', () => {
-      try {
-        video.currentTime = 0;
-        const p = video.play();
-        if (p && typeof p.catch === 'function') p.catch(() => {});
-      } catch (e) {}
+      video.currentTime = 0;
+      video.play().catch(() => {});
     });
 
     container.addEventListener('mouseleave', () => {
-      try {
-        video.pause();
-        video.currentTime = 0;
-      } catch (e) {}
+      video.pause();
+      video.currentTime = 0;
     });
   });
 });

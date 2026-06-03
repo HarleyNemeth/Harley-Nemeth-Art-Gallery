@@ -5,34 +5,61 @@ body {
 }
 /*test*/
 header {
-  color: rgb(114, 230, 191);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-align: center;
-  font-family: verdana;
-  padding: 0 16px 0;
   background-color: rgb(75, 74, 74);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   left: 0;
   z-index: 1000;
 }
 
-.nav ul {
-  display: flex;
-  gap: 10px;
-  list-style: none;
-  margin: 20px;
-  padding: 10px;
-  align-items: center;
+/* Bootstrap navbar styling */
+.navbar {
+  background-color: rgb(75, 74, 74) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.logo {
-  width: 60px;
-  height: auto;
+.navbar-brand {
+  color: rgb(99, 212, 187) !important;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
+
+.navbar-brand span {
+  color: rgb(99, 212, 187);
+}
+
+.navbar-brand .logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.nav-link {
+  color: rgb(255, 255, 255) !important;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  margin-left: 0.5rem;
+}
+
+.nav-link:hover {
+  color: rgb(99, 212, 187) !important;
+  background-color: rgba(99, 212, 187, 0.15);
+  border-radius: 0.375rem;
+}
+
+.nav-link.active {
+  color: rgb(99, 212, 187) !important;
+  border-bottom: 2px solid rgb(99, 212, 187);
+}
+
+.navbar-toggler {
+  border-color: rgb(99, 212, 187);
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.25rem rgba(99, 212, 187, 0.25);
+}
+
+
 
 .banner {
   width: 100%;
@@ -46,31 +73,67 @@ header {
   width: 100vw;
   max-width: 100%;
   overflow: hidden;
+  margin-bottom: 40px;
 }
 
 .banner-button {
   position: absolute;
-  top: 50%;
+  top: 75%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.7);
+  --banner-button-opacity: 0.8;
+  background-color: rgba(0, 0, 0, var(--banner-button-opacity));
   color: rgb(99, 212, 187);
-  border: 2px solid rgb(99, 212, 187);
+  border: none;
   padding: 14px 28px;
-  font-size: 18px;
-  border-radius: 8px;
+  font-size: 22px;
   cursor: pointer;
   z-index: 100;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.banner-button:hover {
+  color: #ffffff;
+  background-color: rgb(99, 212, 187);
+}
+
+.banner-title {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(99, 212, 187);
+  font-size: 5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  z-index: 50;
+  font-family: verdana;
+}
+
+.banner-motto {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(99, 212, 187);
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 0;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  font-family: verdana;
 }
 
 .gall {
-  width: 400px;
+  width: 280px;
   height: auto;
   text-align: center;
-  box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.1);
-  border: 5px solid rgb(0, 0, 0);
+  box-shadow: none;
+  border: 2px solid rgb(0, 0, 0);
   border-radius: 15px;
-  margin: 20px 50px;
+  margin: 15px 20px;
   overflow: hidden;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   display: flex;
@@ -126,7 +189,11 @@ header {
   transform: scale(1.1);
 }
 
-.gall:hover .media-container video {
+.gall:hover .media-container.has-video img {
+  opacity: 0;
+}
+
+.gall:hover .media-container.has-video video {
   opacity: 1;
 }
 
@@ -174,34 +241,6 @@ h3 {
 }
 
 
-
-.nav li {
-  margin: 0;
-  transition: color 0.3s ease;
-}
-
-.nav li:hover {
-  color: rgb(99, 212, 187)
-}
-
-.nav a {
-  color: rgb(255, 255, 255);
-  text-decoration: none;
-  padding: 8px 10px;
-  border-radius: 6px;
-  transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
-  cursor: pointer;
-}
-
-.nav a:hover {
-  color: rgb(255, 255, 255);
-  background-color: rgba(99, 212, 187, 0.18);
-  transform: translateY(-1px);
-}
-
-.nav a.active {
-  color: rgb(99, 212, 187);
-}
 
 p {
     text-align: center;
@@ -256,6 +295,7 @@ text-align: left;
   border: 1px solid transparent;
   border-radius: 5px;
   cursor: pointer;
+  text-decoration: none;
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 

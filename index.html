@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"> <!-- English -->
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
     <meta charset="UTF-8"><!-- encoding, characters display correctly -->
@@ -9,35 +10,24 @@
     <title>Nemeth Art</title>
 </head>
 <body>
-    <header>
-        <a href="index.html"><img src="images/HN_logo.png" class="logo" alt="Nemeth Art Logo"></a>
-        <h1>Németh Art</h1>
-        <div class="nav"> <!-- top navigation bar -->
-            <ul>
-                <li><a href="index.html" class="active"><i class="fa-solid fa-house"></i>Home</a></li>
-                <li><a href="html/cart.html"><i class="fa-solid fa-store"></i>Store</a></li>
-                <li><a href="html/gallery.html"><i class="fa-solid fa-images"></i>Gallery</a></li>
-                <li><a href="html/contact.html"><i class="fa-solid fa-envelope"></i>Contact</a></li>
-                <li><a href="html/cart.html"><i class="fa-solid fa-shopping-cart"></i>Cart</a></li>
-            </ul>
-        </div>
-    </header>
+    <header id="site-header"></header> 
     <main>
         <div class="banner-container">
             <img src="images/test3.jpg" class="banner" alt="banner image">
+            <h1 class="banner-title">Németh Art</h1>
+            <p class="banner-motto">Creating art to spread joy and inspiration.</p>
             <button id="scroll-featured" class="banner-button">See Featured Art</button>
         </div>
-        <p>Creating art to spread joy and inspiration.</p>
         <h2>About</h2>
         <div class="about-section">
             <div class="about-copy">
                 <p class="p2">Hi! I'm Harley Nemeth, and I am an artist. I study computer science and this website is created entirely from scratch. The website aims to showcase my artwork and provide a platform for art enthusiasts to explore and purchase my pieces. I recently began painting as a way to express my creativity and put feelings into canvas. I take inspiration from various sources such as literature, nature and personal experiences.</p>
-                <button class="view-art">View Art</button>
+                <a class="view-art" href="html/gallery.html">View Art</a>
             </div>
             <img src="images/cold.jpg" class="about" alt="about image">
         </div>
         <h2 id="featured-art">Featured Art</h2>
-        <img src="images/ikigai_crop.jpg" class="featured" alt="featured art image">
+        <img src="images/ikigai_crop2.jpg" class="featured" alt="featured art image">
         <h3>Ikigai</h3>
         <p class="p2">This is one of my most recent paintings, inspired by the concept of Ikigai, a Japanese philosophy that emphasizes finding purpose and meaning in life. The painting features a serene landscape with a person sitting under a tree, surrounded by elements that represent different aspects of life such as work, passion, and relationships. The colors used in the painting are calming and evoke a sense of tranquility, reflecting the idea of finding balance and fulfillment in life. Additionaly, the structure of the painting directs the viewer's attention to the central figure, emphasizing the theme of pursuit of purpose in life. The refernce photo for this piece was taken on my trip to Japan Tokyo in 2024 September.</p>
     </main>
@@ -54,6 +44,8 @@
         </div>
         <p><i class="fa-solid fa-palette"></i> &copy; 2026 Nemeth Art</p>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-ltrjvnR4/J6G3CeRa6oWj8b6ZbKfvl6t0l5LWg4ifGTX0V5jsZ1hpCqhi7O7anWa" crossorigin="anonymous"></script>
+    <script src="js/navbar.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
