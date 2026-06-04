@@ -277,9 +277,13 @@ p {
   margin-right: 0.35rem;
 }
 footer {
-text-align: left;
+  text-align: center;
   font-family: verdana;
   font-size: 20px;
+  background-color: rgb(75, 74, 74);
+  color: rgb(255, 255, 255);
+  padding: 20px 0;
+  margin-top: 40px;
 }
 
 .about-section {
@@ -331,18 +335,54 @@ text-align: left;
 
 .social {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
   align-items: center;
   justify-content: center;
-  padding: 20px 0;
+  padding: 0;
 }
 
 .social a {
-  color: rgb(75, 74, 74);
+  color: rgb(99, 212, 187);
   transition: color 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
 }
 
-.social a:hover {
-  color: rgb(99, 212, 187);
+.social-icon:hover {
+  color: rgb(255, 255, 255);
   transform: translateY(-2px);
+}
+
+.social-icon {
+  font-size: 1.5rem;
+}
+
+.social-text {
+  font-size: 14px;
+  white-space: nowrap;
+  color: rgb(255, 255, 255) !important;
+  transition: color 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.social-text:hover {
+  color: rgb(99, 212, 187) !important;
+}
+
+
+
+@media (max-width: 576px) {
+  .social {
+    gap: 10px;
+  }
+  
+  .social-icon {
+    font-size: 1.2rem;
+  }
+  
+  .social-text {
+    font-size: 12px;
+  }
 }

@@ -40,5 +40,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const header = document.querySelector('#site-header');
   if (header) {
     header.innerHTML = navHtml;
+    
+    // Initialize Bootstrap collapse for the dynamically created navbar
+    const navbarToggler = header.querySelector('.navbar-toggler');
+    const navbarCollapse = header.querySelector('.navbar-collapse');
+    
+    if (navbarToggler && navbarCollapse) {
+      const collapse = new bootstrap.Collapse(navbarCollapse, {
+        toggle: false
+      });
+      
+      navbarToggler.addEventListener('click', () => {
+        collapse.toggle();
+      });
+      
+      // Close navbar when a link is clicked
+      const navLinks = header.querySelectorAll('.nav-link');
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          collapse.hide();
+        });
+      });
+    }
   }
 });
