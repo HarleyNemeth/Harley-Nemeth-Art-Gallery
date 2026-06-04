@@ -7,34 +7,42 @@ document.addEventListener('DOMContentLoaded', () => {
         const bannerHeight = banner.offsetHeight
         const imgHeight = 160
         const total = bannerHeight + imgHeight * 2
-
         const leftPositions = [5, 18, 30, 42, 54, 66, 78, 88]
+        let scrollDir = -1
 
-document.querySelectorAll('.float-img').forEach((img, i) => {
-    const duration = 7 + Math.random() * 8
-    const opacity = 0.5 + Math.random() * 0.5
-    const startY = -(imgHeight + Math.random() * bannerHeight)
+        document.querySelectorAll('.float-img').forEach((img, i) => {
+            const duration = 7 + Math.random() * 8
+            const opacity = 0.5 + Math.random() * 0.5
+            const startY = -(imgHeight + Math.random() * bannerHeight)
 
-    gsap.set(img, {
-        opacity: opacity,
-        left: `${leftPositions[i % leftPositions.length]}%`,
-        y: startY
-    })
+            gsap.set(img, {
+                opacity: opacity,
+                left: `${leftPositions[i % leftPositions.length]}%`,
+                y: startY
+            })
 
-    gsap.to(img, {
-    y: `+=${total}`,
-    duration: duration,
-    ease: "none",
-    repeat: -1,
-    modifiers: {
-        y: gsap.utils.unitize(y => {
-            let val = parseFloat(y) % total
-            if (val < -imgHeight) val += total
-            return val
+            let currentY = startY
+
+            gsap.ticker.add(() => {
+                const speed = (total / (duration * 60)) * scrollDir
+                currentY += speed
+                if (currentY < -imgHeight) currentY += total
+                if (currentY > bannerHeight + imgHeight) currentY -= total
+                const progress = (currentY + imgHeight) / total
+                const scale = 0.65 + (1 -progress) * 0.5
+                const fade = 0.4 + (1 - progress) * 0.8 * opacity
+                gsap.set(img, { y: currentY, scale: scale, opacity: fade, transformOrigin: "center bottom" })
+            })
         })
-    }
-})
-})
+
+        ScrollTrigger.create({
+            trigger: "body",
+            start: "top top",
+            end: "bottom bottom",
+            onUpdate: (self) => {
+                scrollDir = self.direction === 1 ? -1 : 1
+            }
+        })
     }
 
     // Scroll to featured button
