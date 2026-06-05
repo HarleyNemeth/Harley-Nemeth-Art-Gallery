@@ -1,12 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en"> <!-- English -->
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <meta charset="UTF-8"><!-- encoding, characters display correctly -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="images/HN_logo.png" type="image/png">
+    <link rel="icon" href="{% static 'images/HN_logo.png' %}" type="image/png">
     <title>Nemeth Art</title>
 </head>
 <body>
@@ -14,14 +15,14 @@
     <main>
         <div class="banner-container">
             <div class="floating-gallery">
-                <img src="images/stipple.jpg" class="float-img">
-                <img src="images/guashe.jpg" class="float-img">
-                <img src="images/rose.jpg" class="float-img">
-                <img src="images/olivia.jpg" class="float-img">
-                <img src="images/kai.jpg" class="float-img">
-                <img src="images/ikigai_crop2.jpg" class="float-img">
-                <img src="images/xxx.jpg" class="float-img">
-                <img src="images/sza.jpg" class="float-img">
+                <img src="{% static 'images/stipple.jpg' %}" class="float-img">
+                <img src="{% static 'images/guashe.jpg' %}" class="float-img">
+                <img src="{% static 'images/rose.jpg' %}" class="float-img">
+                <img src="{% static 'images/olivia.jpg' %}" class="float-img">
+                <img src="{% static 'images/kai.jpg' %}" class="float-img">
+                <img src="{% static 'images/ikigai_crop2.jpg' %}" class="float-img">
+                <img src="{% static 'images/xxx.jpg' %}" class="float-img">
+                <img src="{% static 'images/sza.jpg' %}" class="float-img">
             </div>
                 <h1 class="banner-title">Németh Art</h1>
                 <p class="banner-motto">Creating art to spread joy and inspiration.</p>
@@ -35,17 +36,17 @@
                     <p class="p1">My name is Harley Nemeth, and I am an artist. </p>
                     <p class="p2">I study computer science and so I've created this site entirely from scratch. The website aims to showcase my artwork and provide a platform for art enthusiasts to explore and purchase my pieces. I recently began painting as a way to express my creativity and put feelings into canvas. I take inspiration from various sources such as literature, music, nature and personal experiences.</p>
                     <div class="text-center mt-3">
-                        <a class="view-art btn" href="html/gallery.html">View Art</a>
+                        <a class="view-art btn" href="{% url 'gallery' %}">View Art</a>
                     </div>
                 </div>
                 <div class="col-lg-5 ms-lg-auto order-lg-2 text-lg-end pe-lg-0">
-                    <img src="images/cold.jpg" class="about img-fluid" alt="about image">
+                    <img src="{% static 'images/cold.jpg' %}" class="about img-fluid" alt="about image">
                 </div>
             </div>
 
             <section class="featured-art text-center mt-5">
                 <h2 id="featured-art" class="mb-4">Featured Art</h2>
-                <img src="images/ikigai_crop2.jpg" class="featured img-fluid rounded mb-3" alt="featured art image">
+                <img src="{% static 'images/ikigai_crop2.jpg' %}" class="featured img-fluid rounded mb-3" alt="featured art image">
                 <h3>Ikigai</h3>
                 <p class="p2 mx-auto" style="max-width: 900px;">This is one of my most recent paintings, inspired by the concept of Ikigai, a Japanese philosophy that emphasizes finding purpose and meaning in life. The painting features a serene landscape with a person sitting under a tree, surrounded by elements that represent different aspects of life such as work, passion, and relationships. The colors used in the painting are calming and evoke a sense of tranquility, reflecting the idea of finding balance and fulfillment in life. Additionaly, the structure of the painting directs the viewer's attention to the central figure, emphasizing the theme of pursuit of purpose in life. The refernce photo for this piece was taken on my trip to Japan Tokyo in 2024 September.</p>
             </section>
@@ -55,8 +56,8 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.0/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.0/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/navbar.js"></script>
-    <script src="js/footer.js"></script>
-    <script src="js/main.js"></script>
+    <script src="{% static 'js/navbar.js' %}"></script>
+    <script src="{% static 'js/footer.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

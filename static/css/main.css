@@ -371,8 +371,6 @@ footer {
   color: rgb(99, 212, 187) !important;
 }
 
-
-
 @media (max-width: 576px) {
   .social {
     gap: 10px;
