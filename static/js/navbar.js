@@ -2,13 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const navItems = [
         { label: 'Home', href: '/', icon: 'fa-house', key: '' },
         { label: 'Store', href: '/store/', icon: 'fa-store', key: 'store' },
-        { label: 'Gallery', href: '/gallery/', icon: 'fa-images', key: 'gallery' },
         { label: 'Contact', href: '/contact/', icon: 'fa-envelope', key: 'contact' },
         { label: 'Cart', href: '/cart/', icon: 'fa-shopping-cart', key: 'cart' }
     ]
 
     const currentPath = window.location.pathname
-    const logoSrc = '/static/images/HN_logo.png'
+    const logoSrc = '/static/images/Harley_Nemeth_Logo.png'
 
     const navHtml = `
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">

@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (currentY > bannerHeight + imgHeight) currentY -= total
                 const progress = (currentY + imgHeight) / total
                 const scale = 0.65 + (1 -progress) * 0.5
-                const fade = 0.4 + (1 - progress) * 0.8 * opacity
+                const fade = 0.2 + (1 - progress) * 1.2 * opacity
                 gsap.set(img, { y: currentY, scale: scale, opacity: fade, transformOrigin: "center bottom" })
             })
         })
@@ -83,4 +83,28 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     })
 
+
+// Shop filtering
+const filterBtns = document.querySelectorAll('.filter-btn')
+const artItems = document.querySelectorAll('.art-item')
+
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'))
+        btn.classList.add('active')
+
+        const filter = btn.dataset.filter
+
+        artItems.forEach(item => {
+            const category = item.dataset.category
+            const show = filter === 'all' || category === filter
+
+            if (show) {
+                gsap.to(item, { opacity: 1, duration: 0.3, onStart: () => item.style.display = 'block' })
+            } else {
+                gsap.to(item, { opacity: 0, duration: 0.3, onComplete: () => item.style.display = 'none' })
+            }
+        })
+    })
+})
 })
