@@ -483,3 +483,50 @@ footer {
 textarea.luxury-input {
     resize: vertical;
 }
+.art-title {
+    font-family: var(--luxury-font);
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+}
+
+.art-meta {
+    font-family: var(--luxury-font);
+    font-size: 0.85rem;
+    color: rgba(0, 0, 0, 0.5);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+}
+
+.price {
+    font-family: var(--luxury-font);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: rgb(var(--accent-color));
+    margin-bottom: 0.6rem;
+}
+
+.add-to-cart-btn {
+    font-family: var(--luxury-font);
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background-color: rgb(var(--gray-color));
+    color: rgb(var(--accent-color));
+    border: 1px solid rgb(var(--accent-color));
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.add-to-cart-btn:hover {
+    background-color: rgb(var(--accent-color));
+    color: #ffffff;
+}
+
+.sold-out {
+    font-family: var(--luxury-font);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.4);
+}

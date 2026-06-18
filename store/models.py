@@ -20,6 +20,8 @@ class Artwork(models.Model):
     available = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    size = models.CharField(max_length=50, blank=True)
+    medium = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.title

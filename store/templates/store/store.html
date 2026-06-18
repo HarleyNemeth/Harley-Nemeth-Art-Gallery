@@ -24,9 +24,13 @@
                         <img src="{{ artwork.image_url }}" alt="{{ artwork.title }}">
                     {% endif %}
                 </div>
-                <p>{{ artwork.title }}</p>
+                <p class="art-title">{{ artwork.title }}</p>
+                <p class="art-meta">{{ artwork.size }}{% if artwork.size and artwork.medium %} · {% endif %}{{ artwork.medium }}</p>
                 <p class="price">£{{ artwork.price }}</p>
-                {% if not artwork.available %}
+
+                {% if artwork.available %}
+                    <button class="add-to-cart-btn" data-artwork-id="{{ artwork.id }}">Add to Cart</button>
+                {% else %}
                     <p class="sold-out">Sold Out</p>
                 {% endif %}
             </div>
