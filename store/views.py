@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Artwork, AboutSection
 from django.http import JsonResponse
+from django.db import transaction
 
 def index(request):
     featured = Artwork.objects.filter(featured=True).first()

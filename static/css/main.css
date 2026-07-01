@@ -584,8 +584,8 @@ css.cart-item {
     margin-top: 1rem;
 }
 
-.btn-primary:focus,
-.btn-primary:focus-visible {
+a.btn-primary:focus,
+a.btn-primary:focus-visible {
     outline: none;
     box-shadow: none;
 }
