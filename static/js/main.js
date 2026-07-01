@@ -135,3 +135,4 @@ javascriptdocument.querySelectorAll('.add-to-cart-btn').forEach(btn => {
             })
     })
 })
+})
