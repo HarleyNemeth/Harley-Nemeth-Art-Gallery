@@ -22,6 +22,7 @@ class Artwork(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     size = models.CharField(max_length=50, blank=True)
     medium = models.CharField(max_length=100, blank=True)
+    stock = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return self.title

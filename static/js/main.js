@@ -120,6 +120,9 @@ document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
                     setTimeout(() => {
                         btn.textContent = 'Add to Cart'
                     }, 1500)
+                } else {
+                    btn.textContent = 'Out of Stock'
+                    btn.disabled = true
                 }
             })
     })

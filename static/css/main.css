@@ -530,3 +530,56 @@ textarea.luxury-input {
     text-transform: uppercase;
     color: rgba(0, 0, 0, 0.4);
 }
+
+
+
+css.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.cart-img {
+    width: 100px;
+    height: 120px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.cart-item-details {
+    flex: 1;
+    text-align: left;
+}
+
+.cart-item-details p {
+    text-align: left;
+    margin: 0.2rem 0;
+}
+
+.cart-item-actions {
+    text-align: right;
+}
+
+.remove-btn {
+    font-family: var(--luxury-font);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.4);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    transition: color 0.2s ease;
+}
+
+.remove-btn:hover {
+    color: rgb(var(--accent-color));
+}
+
+.cart-total {
+    text-align: right;
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    margin-top: 1rem;
+}

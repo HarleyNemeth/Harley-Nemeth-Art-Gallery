@@ -62,13 +62,24 @@ def add_to_cart(request, artwork_id):
     cart = request.session.get('cart', {})
     key = str(artwork_id)
 
+    current_qty = cart.get(key, 0)
+
+    if current_qty >= artwork.stock:
+        return JsonResponse({
+            'success': False,
+            'message': 'Sorry, this item is out of stock.'
+        })
+
     if key in cart:
         cart[key] += 1
     else:
         cart[key] = 1
 
     request.session['cart'] = cart
-    return JsonResponse({'success': True, 'cart_count': sum(cart.values())})
+    return JsonResponse({
+        'success': True,
+        'cart_count': sum(cart.values())
+    })
 
 def remove_from_cart(request, artwork_id):
     cart = request.session.get('cart', {})
