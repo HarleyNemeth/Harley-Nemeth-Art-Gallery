@@ -27,6 +27,7 @@
                 <p class="art-title">{{ artwork.title }}</p>
                 <p class="art-meta">{{ artwork.size }}{% if artwork.size and artwork.medium %} · {% endif %}{{ artwork.medium }}</p>
                 <p class="price">£{{ artwork.price }}</p>
+                <p class="art-meta">{{ artwork.stock }} available</p>
 
                 {% if artwork.available %}
                     <button class="add-to-cart-btn" data-artwork-id="{{ artwork.id }}">Add to Cart</button>

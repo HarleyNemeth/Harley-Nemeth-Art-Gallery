@@ -58,29 +58,26 @@ def cart(request):
     return render(request, 'store/cart.html', {'items': items, 'total': total})
 
 def add_to_cart(request, artwork_id):
-    artwork = get_object_or_404(Artwork, id=artwork_id)
-    cart = request.session.get('cart', {})
-    key = str(artwork_id)
+    with transaction.atomic():
+        artwork = get_object_or_404(Artwork, id=artwork_id)
+        cart = request.session.get('cart', {})
+        key = str(artwork_id)
+        current_qty = cart.get(key, 0)
 
-    current_qty = cart.get(key, 0)
+        if current_qty >= artwork.stock:
+            return JsonResponse({
+                'success': False,
+                'message': 'No more stock available'
+            })
 
-    if current_qty >= artwork.stock:
+        cart[key] = current_qty + 1
+        request.session['cart'] = cart
+        request.session.modified = True
+
         return JsonResponse({
-            'success': False,
-            'message': 'Sorry, this item is out of stock.'
+            'success': True,
+            'cart_count': sum(cart.values())
         })
-
-    if key in cart:
-        cart[key] += 1
-    else:
-        cart[key] = 1
-
-    request.session['cart'] = cart
-    return JsonResponse({
-        'success': True,
-        'cart_count': sum(cart.values())
-    })
-
 def remove_from_cart(request, artwork_id):
     cart = request.session.get('cart', {})
     key = str(artwork_id)

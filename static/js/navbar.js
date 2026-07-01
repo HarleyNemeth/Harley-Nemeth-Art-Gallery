@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { label: 'Home', href: '/', icon: 'fa-house', key: '' },
         { label: 'Store', href: '/store/', icon: 'fa-store', key: 'store' },
         { label: 'Contact', href: '/contact/', icon: 'fa-envelope', key: 'contact' },
-        { label: 'Cart', href: '/cart/', icon: 'fa-shopping-cart', key: 'cart' }
+        { label: 'Cart <span id="cart-count" class="cart-count" style="display:none">0</span>', href: '/cart/', icon: 'fa-shopping-cart', key: 'cart' }
     ]
 
     const currentPath = window.location.pathname

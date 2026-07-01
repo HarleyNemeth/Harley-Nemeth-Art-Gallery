@@ -111,18 +111,21 @@ filterBtns.forEach(btn => {
 document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const artworkId = btn.dataset.artworkId
-
         fetch(`/cart/add/${artworkId}/`)
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
                     btn.textContent = 'Added'
+                    const counter = document.getElementById('cart-count')
+                    if (counter) counter.textContent = data.cart_count
                     setTimeout(() => {
                         btn.textContent = 'Add to Cart'
                     }, 1500)
                 } else {
-                    btn.textContent = 'Out of Stock'
-                    btn.disabled = true
+                    btn.textContent = 'No more stock'
+                    setTimeout(() => {
+                        btn.textContent = 'Add to Cart'
+                    }, 1500)
                 }
             })
     })
