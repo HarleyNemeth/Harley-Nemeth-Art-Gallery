@@ -108,7 +108,7 @@ filterBtns.forEach(btn => {
     })
 })
 
-javascriptdocument.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const artworkId = btn.dataset.artworkId
 
