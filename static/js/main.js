@@ -107,4 +107,21 @@ filterBtns.forEach(btn => {
         })
     })
 })
+
+document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const artworkId = btn.dataset.artworkId
+
+        fetch(`/cart/add/${artworkId}/`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    btn.textContent = 'Added'
+                    setTimeout(() => {
+                        btn.textContent = 'Add to Cart'
+                    }, 1500)
+                }
+            })
+    })
+})
 })

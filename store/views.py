@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Artwork, AboutSection
+from django.http import JsonResponse
 
 def index(request):
     featured = Artwork.objects.filter(featured=True).first()
@@ -35,5 +36,44 @@ def contact(request):
         form = ContactForm()
 
     return render(request, 'store/contact.html', {'form': form, 'sent': sent})
+
 def cart(request):
-    return render(request, 'store/cart.html')
+    cart = request.session.get('cart', {})
+    items = []
+    total = 0
+
+    for artwork_id, quantity in cart.items():
+        try:
+            artwork = Artwork.objects.get(id=int(artwork_id))
+            subtotal = artwork.price * quantity
+            total += subtotal
+            items.append({
+                'artwork': artwork,
+                'quantity': quantity,
+                'subtotal': subtotal,
+            })
+        except Artwork.DoesNotExist:
+            pass
+
+    return render(request, 'store/cart.html', {'items': items, 'total': total})
+
+def add_to_cart(request, artwork_id):
+    artwork = get_object_or_404(Artwork, id=artwork_id)
+    cart = request.session.get('cart', {})
+    key = str(artwork_id)
+
+    if key in cart:
+        cart[key] += 1
+    else:
+        cart[key] = 1
+
+    request.session['cart'] = cart
+    return JsonResponse({'success': True, 'cart_count': sum(cart.values())})
+
+def remove_from_cart(request, artwork_id):
+    cart = request.session.get('cart', {})
+    key = str(artwork_id)
+    if key in cart:
+        del cart[key]
+    request.session['cart'] = cart
+    return redirect('cart')
