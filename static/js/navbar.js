@@ -56,4 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         }
     }
+    const header = document.querySelector('#site-header')
+    const initialCount = parseInt(header.dataset.cartCount) || 0
+    const cartCountEl = document.getElementById('cart-count')
+    if (cartCountEl && initialCount > 0) {
+        cartCountEl.textContent = initialCount
+        cartCountEl.style.display = 'inline-flex'
+    }
 })
