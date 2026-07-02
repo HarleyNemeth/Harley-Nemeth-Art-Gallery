@@ -607,6 +607,8 @@ button.btn-primary:focus-visible {
     width: 18px;
     height: 18px;
     border-radius: 50%;
+    position: relative;
+    top: -8px;
     margin-left: 4px;
     font-family: verdana;
 }
