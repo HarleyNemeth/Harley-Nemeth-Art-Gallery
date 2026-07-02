@@ -4,6 +4,10 @@
   --luxury-font: 'Cormorant Garamond', 'Georgia', serif;
 } /* old accent colour 99, 212, 187; i also liek this one 0, 150, 120;*/
 
+html {
+    overflow-y: scroll;
+}
+
 /* Button Framework */
 .btn-primary {
   display: inline-block;
