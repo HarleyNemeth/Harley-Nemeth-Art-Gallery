@@ -89,7 +89,7 @@ import dj_database_url
 DATABASES = {
     'default': dj_database_url.config(
         default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
-        conn_max_age=600
+        conn_max_age=0 #do not keep connections open for long
     )
 }
 
