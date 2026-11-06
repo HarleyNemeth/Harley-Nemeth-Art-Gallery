@@ -1,0 +1,73 @@
+
+name: Deploy Art Gallery
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to Oracle Cloud
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate deployment secrets
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -eu
+          test -n "$DEPLOY_HOST"
+          test -n "$DEPLOY_USER"
+          test -n "$DEPLOY_PATH"
+          test -n "$DEPLOY_SSH_KEY"
+          test -n "$DEPLOY_KNOWN_HOSTS"
+
+      - name: Configure SSH
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -eu
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Verify SSH connection
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+            -o IdentitiesOnly=yes \
+            -o BatchMode=yes \
+            "$DEPLOY_USER@$DEPLOY_HOST" \
+            'printf "SSH connection successful\n"'
+
+      - name: Deploy application
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+            -o IdentitiesOnly=yes \
+            -o BatchMode=yes \
+            "$DEPLOY_USER@$DEPLOY_HOST" \
+            "cd '$DEPLOY_PATH' && git fetch origin main && git merge --ff-only origin/main && sudo -n docker compose up -d --build web"
