@@ -15,9 +15,9 @@ A full-stack Django e-commerce application developed to showcase, manage and sel
 - [Application Architecture](#application-architecture)
 - [Project Structure](#project-structure)
 - [Database Models](#database-models)
+- [Local Setup](#local-setup)
 - [Deployment](#deployment)
 - [CI/CD Pipeline](#cicd-pipeline)
-- [Development Roadmap](#development-roadmap)
 
 ---
 
@@ -73,7 +73,7 @@ Beyond application development, the project also includes containerisation, clou
 | Category | Technologies |
 |---|---|
 | Backend | Python, Django |
-| Frontend | HTML, CSS, JavaScript, Boostrap |
+| Frontend | HTML, CSS, JavaScript, Bootstrap |
 | Database | PostgreSQL, SQLite |
 | ORM | Django ORM |
 | Database configuration | dj-database-url |
@@ -190,6 +190,73 @@ The application currently uses three principal Django models.
 
 Django's ORM manages database interactions, while the Django Admin interface provides a way to manage records without directly modifying the database.
 
+## Local Setup
+
+### Prerequisites
+
+- Python 3.13
+- Git
+- pip
+- Visual Studio Code (recommended)
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/HarleyNemeth/Harley-Nemeth-Art-Gallery.git
+
+cd Harley-Nemeth-Art-Gallery
+```
+
+### 2. Create a virtual environment
+
+**Windows PowerShell:**
+
+```powershell
+python -m venv venv
+
+.\venv\Scripts\Activate.ps1
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure environment variables
+
+Create a `.env` file in the project root. See the production configuration on the server and Django settings for the required variables.
+
+Never commit credentials or secret keys to GitHub.
+
+### 5. Apply database migrations
+
+```bash
+python manage.py migrate
+```
+
+### 6. Create an administrator account
+
+```bash
+python manage.py createsuperuser
+```
+
+### 7. Collect static files
+
+```bash
+python manage.py collectstatic --noinput
+```
+
+### 8. Run the development server
+
+```bash
+python manage.py runserver
+```
+
+The application will be available at:
+
+`http://127.0.0.1:8000/`
+
 ## Deployment
 
 The application is deployed to an Oracle Cloud virtual machine using Docker, Docker Compose, Nginx and Gunicorn.
@@ -267,48 +334,6 @@ Local Development
 ```
 
 The current workflow automates deployment. Automated testing, post-deployment health checks and rollback functionality are planned improvements.
-
-## Development Roadmap
-
-### Application Development
-- [ ] Complete Stripe payment integration.
-- [ ] Implement secure checkout.
-- [ ] Introduce persistent order records and order management.
-- [ ] Implement payment confirmation and webhook handling.
-- [ ] Improve stock management and order processing.
-- [ ] Add customer order confirmation emails.
-- [ ] Complete custom artwork enquiry functionality.
-
-### Testing and Quality Assurance
-- [ ] Expand Django unit and integration tests.
-- [ ] Test shopping cart and stock behaviour.
-- [ ] Test contact form and email delivery.
-- [ ] Test payment and checkout workflows.
-- [ ] Add automated Django checks to GitHub Actions.
-- [ ] Add post-deployment health checks.
-- [ ] Implement deployment rollback procedures.
-
-### Infrastructure and Security
-- [x] Docker containerisation.
-- [x] Oracle Cloud deployment.
-- [x] Nginx reverse proxy.
-- [x] HTTPS configuration.
-- [x] PostgreSQL integration.
-- [x] External artwork media hosting.
-- [x] Automated GitHub Actions deployment.
-- [ ] Automated database backups and recovery.
-- [ ] Dependency vulnerability scanning.
-- [ ] Production monitoring and alerting.
-- [ ] Review deployment security and permissions.
-
-### Business Readiness
-- [ ] Finalise privacy policy.
-- [ ] Add terms and conditions.
-- [ ] Add shipping, delivery and returns information.
-- [ ] Review cookie usage and consent requirements.
-- [ ] Complete payment provider configuration.
-- [ ] Test the complete customer purchase journey.
-- [ ] Complete pre-launch security and functionality review.
 
 ---
 
