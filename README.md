@@ -72,8 +72,8 @@ Beyond application development, the project also includes containerisation, clou
 
 | Category | Technologies |
 |---|---|
-| Backend | Python, Django 5.2 |
-| Frontend | HTML5, CSS3, JavaScript |
+| Backend | Python, Django |
+| Frontend | HTML, CSS, JavaScript, Boostrap |
 | Database | PostgreSQL, SQLite |
 | ORM | Django ORM |
 | Database configuration | dj-database-url |
