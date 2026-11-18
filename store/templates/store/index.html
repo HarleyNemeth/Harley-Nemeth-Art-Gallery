@@ -44,6 +44,9 @@
                     <h3 class="p1">{{ featured.title }}</h3>
                     <p class="p2 mx-auto" style="max-width: 900px;">{{ featured.description }}</p>
                 {% endif %}
+                <a class="view-art btn commission-cta" href="{% url 'contact' %}?enquiry_type=commission">
+                    Request a Commission
+                </a>
             </section>
         </div>
 {% endblock %}

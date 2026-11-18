@@ -4,33 +4,85 @@
 {% block title %}Harley Nemeth Art Contact{% endblock %}
 
 {% block content %}
-    <div class="container py-5" style="max-width: 700px;">
-        <h2 class="text-center mb-4">Contact</h2>
-        <p class="p2 text-center mb-5">Have a question about a piece, a commission enquiry, or just want to say hello? Send a message below.</p>
+    <div class="container py-5 contact-page">
+        <h2 class="text-center mb-3">Contact &amp; Commissions</h2>
+        <p class="p2 text-center contact-intro">
+            Explore the commission offerings or send a message about artwork, collaborations, or anything else.
+        </p>
 
-        {% if sent %}
-            <p class="text-center" style="color: rgb(var(--accent-color)); font-family: var(--luxury-font); font-size: 1.3rem;">
-                Thank you, your message has been sent. I'll be in touch soon.
-            </p>
-        {% else %}
-            <form method="post" class="contact-form">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label for="{{ form.name.id_for_label }}" class="form-label">Name</label>
-                    {{ form.name }}
-                </div>
-                <div class="mb-3">
-                    <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
-                    {{ form.email }}
-                </div>
-                <div class="mb-3">
-                    <label for="{{ form.message.id_for_label }}" class="form-label">Message</label>
-                    {{ form.message }}
-                </div>
-                <div class="text-center mt-4">
-                    <button type="submit" class="btn-primary">Send Message</button>
-                </div>
-            </form>
-        {% endif %}
+        <div class="contact-layout">
+            <section class="contact-panel commission-panel" aria-labelledby="commission-heading">
+                <h3 id="commission-heading">Commission Offerings</h3>
+                <p class="contact-panel-intro">Select an offering to include it in your enquiry.</p>
+
+                {% if commission_offerings %}
+                    <div class="commission-list">
+                        {% for offering in commission_offerings %}
+                            <article class="commission-card">
+                                {% if offering.image_url %}
+                                    <img class="commission-image" src="{{ offering.image_url }}" alt="{{ offering.title }}">
+                                {% endif %}
+                                <div class="commission-copy">
+                                    <h4>{{ offering.title }}</h4>
+                                    <p>{{ offering.description|linebreaksbr }}</p>
+                                    <a class="commission-link" href="{% url 'contact' %}?enquiry_type=commission&amp;commission_offering={{ offering.id }}#contact-form">
+                                        Enquire about this
+                                    </a>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="commission-empty">
+                        There are no commission offerings listed right now. You can still share an idea using the enquiry form.
+                    </p>
+                {% endif %}
+            </section>
+
+            <section class="contact-panel enquiry-panel" aria-labelledby="enquiry-heading">
+                <h3 id="enquiry-heading">Send an Enquiry</h3>
+                <p class="contact-panel-intro">Use the form for commission ideas, artwork questions, business enquiries, or a general message.</p>
+
+                {% if sent %}
+                    <p class="contact-success" role="status">
+                        Thank you, your message has been sent.
+                    </p>
+                {% else %}
+                    <form method="post" class="contact-form" id="contact-form">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            {% if field.name == "commission_offering" %}
+                                <fieldset class="commission-details">
+                                    <legend>Commission details (optional)</legend>
+                                    <div class="mb-3">
+                                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                        {{ field }}
+                                        {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+                                    </div>
+                            {% elif field.name == "message" %}
+                                    <div class="mb-3">
+                                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                        {{ field }}
+                                        {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+                                    </div>
+                                </fieldset>
+                            {% else %}
+                                <div class="mb-3">
+                                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                    {{ field }}
+                                    {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn-primary">Send Enquiry</button>
+                        </div>
+                        <p class="contact-privacy-note">
+                            Your details will be used to respond to your enquiry.
+                        </p>
+                    </form>
+                {% endif %}
+            </section>
+        </div>
     </div>
 {% endblock %}

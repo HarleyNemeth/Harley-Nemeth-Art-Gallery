@@ -1,12 +1,19 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Artwork, AboutSection
+from .models import Artwork, AboutSection, CommissionOffering
 from django.http import JsonResponse
 from django.db import transaction
 
 def index(request):
     featured = Artwork.objects.filter(featured=True).first()
     about = AboutSection.objects.first()
-    return render(request, 'store/index.html', {'featured': featured, 'about': about})
+    return render(
+        request,
+        "store/index.html",
+        {
+            "featured": featured,
+            "about": about,
+        },
+    )
 
 def store(request):
     artworks = Artwork.objects.select_related('category').all()
@@ -42,22 +49,58 @@ def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            message = form.cleaned_data['message']
+            data = form.cleaned_data
+            inquiry_label = dict(ContactForm.INQUIRY_CHOICES)[data["inquiry_type"]]
+            message_parts = [
+                f"Enquiry type: {inquiry_label}",
+                f"From: {data['name']} ({data['email']})",
+            ]
+            if data["commission_offering"]:
+                message_parts.append(
+                    f"Commission type: {data['commission_offering'].title}"
+                )
+            for label, field in (
+                ("Preferred size or format", "project_size"),
+                ("Approximate budget", "budget"),
+                ("Ideal timeframe", "timeframe"),
+            ):
+                if data[field]:
+                    message_parts.append(f"{label}: {data[field]}")
+            message_parts.extend(("", data["message"]))
 
             send_mail(
-                subject=f'New enquiry from {name}',
-                message=f'From: {name} ({email})\n\n{message}',
+                subject=f"{inquiry_label} from {data['name']}",
+                message="\n".join(message_parts),
                 from_email=None,
                 recipient_list=['dracohcn@gmail.com'],
             )
             sent = True
             form = ContactForm()
     else:
-        form = ContactForm()
+        initial = {}
+        inquiry_type = request.GET.get("enquiry_type")
+        allowed_types = {choice[0] for choice in ContactForm.INQUIRY_CHOICES}
+        if inquiry_type in allowed_types:
+            initial["inquiry_type"] = inquiry_type
 
-    return render(request, 'store/contact.html', {'form': form, 'sent': sent})
+        offering_id = request.GET.get("commission_offering")
+        if offering_id and offering_id.isdecimal():
+            if CommissionOffering.objects.filter(
+                pk=offering_id,
+                is_active=True,
+            ).exists():
+                initial["commission_offering"] = offering_id
+        form = ContactForm(initial=initial)
+
+    return render(
+        request,
+        "store/contact.html",
+        {
+            "form": form,
+            "sent": sent,
+            "commission_offerings": CommissionOffering.objects.filter(is_active=True),
+        },
+    )
 
 def cart(request):
     cart = request.session.get('cart', {})
