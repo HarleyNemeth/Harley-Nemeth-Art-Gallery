@@ -4,37 +4,59 @@
 {% block title %}Harley Nemeth Art Store{% endblock %}
 
 {% block content %}
-    <h2>Shop</h2>
+    <div class="shop-page">
+        <h2>Shop</h2>
 
-    <div class="shop-filter">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="original">Originals</button>
-        <button class="filter-btn" data-filter="print">Prints</button>
-    </div>
+        <div class="shop-filter" role="group" aria-label="Filter artwork by category">
+            <button type="button" class="filter-btn active" data-filter="all">All</button>
+            <button type="button" class="filter-btn" data-filter="original">Originals</button>
+            <button type="button" class="filter-btn" data-filter="print">Prints</button>
+        </div>
 
-    <section class="gallery">
-        {% for artwork in artworks %}
-            <div class="art-item" data-category="{{ artwork.category.name|lower }}">
-                <div class="gall">
-                    {% if artwork.hover_video_url %}
-                        <div class="media-container" data-hover-video="{{ artwork.hover_video_url }}">
-                            <img src="{{ artwork.image_url }}" alt="{{ artwork.title }}">
+        <section class="gallery" aria-label="Artwork">
+            {% for section in artwork_sections %}
+                {% for artwork in section.artworks %}
+                    <article class="art-item" data-category="{{ artwork.category.name|lower }}">
+                        <div class="gall">
+                            {% if artwork.hover_video_url %}
+                                <div class="media-container" data-hover-video="{{ artwork.hover_video_url }}">
+                                    {% if artwork.image_url %}
+                                        <img src="{{ artwork.image_url }}" alt="{{ artwork.title }}">
+                                    {% else %}
+                                        <div class="artwork-image-placeholder" role="img" aria-label="Image unavailable for {{ artwork.title }}">
+                                            <span>Image unavailable</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% elif artwork.image_url %}
+                                <img src="{{ artwork.image_url }}" alt="{{ artwork.title }}">
+                            {% else %}
+                                <div class="artwork-image-placeholder" role="img" aria-label="Image unavailable for {{ artwork.title }}">
+                                    <span>Image unavailable</span>
+                                </div>
+                            {% endif %}
                         </div>
-                    {% else %}
-                        <img src="{{ artwork.image_url }}" alt="{{ artwork.title }}">
-                    {% endif %}
-                </div>
-                <p class="art-title">{{ artwork.title }}</p>
-                <p class="art-meta">{{ artwork.size }}{% if artwork.size and artwork.medium %} · {% endif %}{{ artwork.medium }}</p>
-                <p class="price">£{{ artwork.price }}</p>
-                <p class="art-meta">{{ artwork.stock }} available</p>
+                        <h4 class="art-title">{{ artwork.title }}</h4>
+                        {% if artwork.description %}
+                            <p class="art-description">{{ artwork.description }}</p>
+                        {% endif %}
+                        {% if artwork.size or artwork.medium %}
+                            <p class="art-meta">{{ artwork.size }}{% if artwork.size and artwork.medium %} · {% endif %}{{ artwork.medium }}</p>
+                        {% endif %}
+                        <p class="price">£{{ artwork.price }}</p>
 
-                {% if artwork.available %}
-                    <button class="add-to-cart-btn" data-artwork-id="{{ artwork.id }}">Add to Cart</button>
-                {% else %}
-                    <p class="sold-out">Sold Out</p>
-                {% endif %}
-            </div>
-        {% endfor %}
-    </section>
+                        {% if artwork.available and artwork.stock > 0 %}
+                            <p class="art-status available-status">Available</p>
+                            <p class="art-meta">{{ artwork.stock }} available</p>
+                            <button class="add-to-cart-btn" type="button" data-artwork-id="{{ artwork.id }}">Add to Cart</button>
+                        {% elif artwork.available %}
+                            <p class="art-status sold-out">Sold Out</p>
+                        {% else %}
+                            <p class="art-status not-offered">Not Currently Available</p>
+                        {% endif %}
+                    </article>
+                {% endfor %}
+            {% endfor %}
+        </section>
+    </div>
 {% endblock %}

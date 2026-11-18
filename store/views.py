@@ -9,8 +9,29 @@ def index(request):
     return render(request, 'store/index.html', {'featured': featured, 'about': about})
 
 def store(request):
-    artworks = Artwork.objects.all()
-    return render(request, 'store/store.html', {'artworks': artworks})
+    artworks = Artwork.objects.select_related('category').all()
+    artwork_sections = [
+        {
+            'id': 'available-artworks',
+            'heading': 'Available Artwork',
+            'artworks': artworks.filter(available=True, stock__gt=0),
+        },
+        {
+            'id': 'sold-out-artworks',
+            'heading': 'Sold Out',
+            'artworks': artworks.filter(available=True, stock=0),
+        },
+        {
+            'id': 'not-offered-artworks',
+            'heading': 'Not Currently Offered',
+            'artworks': artworks.filter(available=False),
+        },
+    ]
+    return render(
+        request,
+        'store/store.html',
+        {'artworks': artworks, 'artwork_sections': artwork_sections},
+    )
 
 from django.core.mail import send_mail
 from .forms import ContactForm
@@ -61,6 +82,12 @@ def cart(request):
 def add_to_cart(request, artwork_id):
     with transaction.atomic():
         artwork = get_object_or_404(Artwork, id=artwork_id)
+        if not artwork.available or artwork.stock <= 0:
+            return JsonResponse({
+                'success': False,
+                'message': 'This artwork is not available for purchase'
+            })
+
         cart = request.session.get('cart', {})
         key = str(artwork_id)
         current_qty = cart.get(key, 0)
