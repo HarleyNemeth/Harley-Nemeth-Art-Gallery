@@ -1,5 +1,4 @@
 from django import forms
-from .models import CommissionOffering
 
 class ContactForm(forms.Form):
     INQUIRY_CHOICES = (
@@ -27,13 +26,6 @@ class ContactForm(forms.Form):
         label="What is your enquiry about?",
         widget=forms.Select(attrs={"class": "luxury-input"}),
         initial="general",
-    )
-    commission_offering = forms.ModelChoiceField(
-        queryset=CommissionOffering.objects.filter(is_active=True),
-        required=False,
-        empty_label="Choose an offering (optional)",
-        label="Commission type",
-        widget=forms.Select(attrs={"class": "luxury-input"}),
     )
     project_size = forms.CharField(
         max_length=120,

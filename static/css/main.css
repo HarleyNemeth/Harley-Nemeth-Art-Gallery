@@ -836,6 +836,17 @@ button.btn-primary:focus-visible {
     background-color: var(--shop-image-background);
 }
 
+.commission-image-placeholder {
+    display: flex;
+    min-height: 10rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    color: var(--shop-muted-color);
+    background-color: var(--shop-image-background);
+    font-family: var(--luxury-font);
+}
+
 .commission-copy {
     padding: 1rem 1.1rem 1.25rem;
 }
@@ -856,19 +867,6 @@ button.btn-primary:focus-visible {
     text-align: left;
 }
 
-.commission-link {
-    color: var(--shop-accent-text-color);
-    font-family: var(--luxury-font);
-    font-size: 1.05rem;
-    font-weight: 600;
-    text-underline-offset: 0.2em;
-}
-
-.commission-link:hover,
-.commission-link:focus-visible {
-    color: rgb(var(--gray-color));
-}
-
 .contact-page .form-label {
     display: block;
 }
@@ -880,22 +878,6 @@ button.btn-primary:focus-visible {
 .contact-page .luxury-input:focus-visible {
     outline: 2px solid var(--shop-accent-text-color);
     outline-offset: 2px;
-}
-
-.commission-details {
-    min-width: 0;
-    margin: 1.5rem 0 0;
-    padding: 1.1rem 1rem 0.25rem;
-    border: 1px solid rgba(43, 45, 47, 0.18);
-}
-
-.commission-details legend {
-    float: none;
-    width: auto;
-    padding: 0 0.45rem;
-    color: var(--shop-text-color);
-    font-family: var(--luxury-font);
-    font-size: 1.15rem;
 }
 
 .field-error {

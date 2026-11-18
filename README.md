@@ -229,6 +229,8 @@ Create a `.env` file in the project root. See the production configuration on th
 
 Never commit credentials or secret keys to GitHub.
 
+Set `CONTACT_EMAIL` to the address that should receive contact form submissions. Email delivery also requires valid `EMAIL_HOST_USER` and `EMAIL_HOST_PASSWORD` SMTP credentials.
+
 ### 5. Apply database migrations
 
 ```bash

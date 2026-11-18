@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Artwork, AboutSection, CommissionOffering
+from .models import Artwork, AboutSection, PastCommission
 from django.http import JsonResponse
 from django.db import transaction
+from django.conf import settings
 
 def index(request):
     featured = Artwork.objects.filter(featured=True).first()
@@ -55,10 +56,6 @@ def contact(request):
                 f"Enquiry type: {inquiry_label}",
                 f"From: {data['name']} ({data['email']})",
             ]
-            if data["commission_offering"]:
-                message_parts.append(
-                    f"Commission type: {data['commission_offering'].title}"
-                )
             for label, field in (
                 ("Preferred size or format", "project_size"),
                 ("Approximate budget", "budget"),
@@ -72,7 +69,7 @@ def contact(request):
                 subject=f"{inquiry_label} from {data['name']}",
                 message="\n".join(message_parts),
                 from_email=None,
-                recipient_list=['dracohcn@gmail.com'],
+                recipient_list=[settings.CONTACT_EMAIL],
             )
             sent = True
             form = ContactForm()
@@ -83,13 +80,6 @@ def contact(request):
         if inquiry_type in allowed_types:
             initial["inquiry_type"] = inquiry_type
 
-        offering_id = request.GET.get("commission_offering")
-        if offering_id and offering_id.isdecimal():
-            if CommissionOffering.objects.filter(
-                pk=offering_id,
-                is_active=True,
-            ).exists():
-                initial["commission_offering"] = offering_id
         form = ContactForm(initial=initial)
 
     return render(
@@ -98,7 +88,7 @@ def contact(request):
         {
             "form": form,
             "sent": sent,
-            "commission_offerings": CommissionOffering.objects.filter(is_active=True),
+            "past_commissions": PastCommission.objects.filter(is_visible=True),
         },
     )
 

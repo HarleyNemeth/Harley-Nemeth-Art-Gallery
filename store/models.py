@@ -40,17 +40,17 @@ class AboutSection(models.Model):
         return self.heading
 
 
-class CommissionOffering(models.Model):
+class PastCommission(models.Model):
     title = models.CharField(max_length=120)
     description = models.TextField()
     image_url = models.URLField(blank=True)
-    is_active = models.BooleanField(default=True)
+    is_visible = models.BooleanField(default=True)
     display_order = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ["display_order", "title"]
-        verbose_name = "Commission offering"
-        verbose_name_plural = "Commission offerings"
+        verbose_name = "Past commission"
+        verbose_name_plural = "Past commissions"
 
     def __str__(self):
         return self.title

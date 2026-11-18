@@ -4,7 +4,7 @@ from django.core import mail
 from django.contrib.auth import get_user_model
 from django.test import override_settings
 
-from .models import Artwork, Category, AboutSection, CommissionOffering
+from .models import Artwork, Category, AboutSection, PastCommission
 
 
 class StorePageTests(TestCase):
@@ -53,33 +53,31 @@ class StorePageTests(TestCase):
             f'{reverse("contact")}?enquiry_type=commission',
         )
 
-    def test_contact_page_displays_active_commission_offerings(self):
-        offering = CommissionOffering.objects.create(
+    def test_contact_page_displays_visible_past_commissions(self):
+        PastCommission.objects.create(
             title="Portrait Commission",
             description="A custom portrait in the artist's style.",
         )
-        CommissionOffering.objects.create(
-            title="Hidden Offering",
+        PastCommission.objects.create(
+            title="Hidden Commission",
             description="Not currently listed.",
-            is_active=False,
+            is_visible=False,
         )
 
         response = self.client.get(
             reverse("contact"),
-            {"enquiry_type": "commission", "commission_offering": offering.id},
+            {"enquiry_type": "commission"},
         )
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Portrait Commission")
-        self.assertNotContains(response, "Hidden Offering")
+        self.assertNotContains(response, "Hidden Commission")
+        self.assertContains(response, "Past Commissions")
+        self.assertNotContains(response, "Choose an offering")
         self.assertEqual(response.context["form"]["inquiry_type"].value(), "commission")
-        self.assertEqual(
-            response.context["form"]["commission_offering"].value(),
-            str(offering.id),
-        )
 
-    def test_commission_offerings_are_manageable_in_admin(self):
-        offering = CommissionOffering.objects.create(
+    def test_past_commissions_are_manageable_in_admin(self):
+        commission = PastCommission.objects.create(
             title="Portrait Commission",
             description="A custom portrait in the artist's style.",
         )
@@ -91,29 +89,24 @@ class StorePageTests(TestCase):
         self.client.force_login(admin_user)
 
         response = self.client.get(
-            reverse("admin:store_commissionoffering_changelist")
+            reverse("admin:store_pastcommission_changelist")
         )
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, offering.title)
+        self.assertContains(response, commission.title)
 
     @override_settings(
         EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
         DEFAULT_FROM_EMAIL="website@example.test",
+        CONTACT_EMAIL="contact@example.test",
     )
     def test_contact_form_sends_general_and_commission_details(self):
-        offering = CommissionOffering.objects.create(
-            title="Portrait Commission",
-            description="A custom portrait in the artist's style.",
-        )
-
         response = self.client.post(
             reverse("contact"),
             {
                 "name": "Alex",
                 "email": "alex@example.test",
                 "inquiry_type": "commission",
-                "commission_offering": str(offering.id),
                 "project_size": "A4",
                 "budget": "To be discussed",
                 "timeframe": "Spring",
@@ -125,7 +118,7 @@ class StorePageTests(TestCase):
         self.assertTrue(response.context["sent"])
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("Commission enquiry", mail.outbox[0].subject)
-        self.assertIn("Commission type: Portrait Commission", mail.outbox[0].body)
+        self.assertEqual(mail.outbox[0].to, ["contact@example.test"])
         self.assertIn("Preferred size or format: A4", mail.outbox[0].body)
         self.assertIn("Approximate budget: To be discussed", mail.outbox[0].body)
         self.assertIn("I would like to discuss a portrait.", mail.outbox[0].body)
