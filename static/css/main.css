@@ -4,6 +4,7 @@
   --luxury-font: 'Cormorant Garamond', 'Georgia', serif;
   --shop-content-width: 78rem;
   --shop-card-min-width: 14rem;
+  --shop-card-max-width: 24rem;
   --shop-card-gap: clamp(1rem, 3vw, 2rem);
   --shop-image-ratio: 4 / 5;
   --shop-image-background: #f7f6f3;
@@ -647,8 +648,9 @@ button.btn-primary:focus-visible {
     max-width: var(--shop-content-width);
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--shop-card-min-width)), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--shop-card-min-width)), var(--shop-card-max-width)));
     align-items: stretch;
+    justify-content: center;
     gap: var(--shop-card-gap);
     padding: clamp(1.5rem, 4vw, 2.5rem);
 }
@@ -762,8 +764,9 @@ button.btn-primary:focus-visible {
 
 @media (max-width: 576px) {
     .shop-page .gallery {
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: minmax(0, min(100%, var(--shop-card-max-width)));
         padding-inline: 1rem;
+        justify-content: center;
     }
 
     .shop-page .art-item {
