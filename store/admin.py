@@ -8,7 +8,11 @@ admin.site.register(AboutSection)
 
 @admin.register(PastCommission)
 class PastCommissionAdmin(admin.ModelAdmin):
-    list_display = ("title", "is_visible", "display_order")
+    list_display = ("commission_title", "is_visible", "display_order")
     list_filter = ("is_visible",)
     search_fields = ("title", "description")
     ordering = ("display_order", "title")
+
+    @admin.display(description="Title")
+    def commission_title(self, commission):
+        return commission.title or "Untitled commission"

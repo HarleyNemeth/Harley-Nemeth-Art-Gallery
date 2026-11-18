@@ -76,10 +76,23 @@ class StorePageTests(TestCase):
         self.assertNotContains(response, "Choose an offering")
         self.assertEqual(response.context["form"]["inquiry_type"].value(), "commission")
 
+    def test_past_commission_can_be_displayed_without_title_or_description(self):
+        PastCommission.objects.create(
+            image_url="https://example.test/commission-art.jpg",
+        )
+
+        response = self.client.get(reverse("contact"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'src="https://example.test/commission-art.jpg"')
+        self.assertContains(response, 'alt="Past commission artwork"')
+        self.assertContains(response, "data-commission-artwork")
+        self.assertTrue(PastCommission._meta.get_field("title").blank)
+        self.assertTrue(PastCommission._meta.get_field("description").blank)
+
     def test_past_commissions_are_manageable_in_admin(self):
         commission = PastCommission.objects.create(
-            title="Portrait Commission",
-            description="A custom portrait in the artist's style.",
+            image_url="https://example.test/commission-art.jpg",
         )
         admin_user = get_user_model().objects.create_superuser(
             username="admin",
@@ -93,7 +106,8 @@ class StorePageTests(TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, commission.title)
+        self.assertContains(response, "Untitled commission")
+        self.assertIn(commission, PastCommission.objects.all())
 
     @override_settings(
         EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",

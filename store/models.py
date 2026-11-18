@@ -41,8 +41,8 @@ class AboutSection(models.Model):
 
 
 class PastCommission(models.Model):
-    title = models.CharField(max_length=120)
-    description = models.TextField()
+    title = models.CharField(max_length=120, blank=True)
+    description = models.TextField(blank=True)
     image_url = models.URLField(blank=True)
     is_visible = models.BooleanField(default=True)
     display_order = models.PositiveIntegerField(default=0)
@@ -53,4 +53,4 @@ class PastCommission(models.Model):
         verbose_name_plural = "Past commissions"
 
     def __str__(self):
-        return self.title
+        return self.title or "Past commission"

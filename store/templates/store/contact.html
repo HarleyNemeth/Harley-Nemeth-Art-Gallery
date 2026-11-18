@@ -16,23 +16,25 @@
                 <p class="contact-panel-intro">A selection of previously completed commission work.</p>
 
                 {% if past_commissions %}
-                    <div class="commission-list">
+                    <section class="commission-gallery" aria-label="Past commission gallery">
                         {% for commission in past_commissions %}
-                            <article class="commission-card">
+                            <figure class="commission-card" data-commission-artwork>
                                 {% if commission.image_url %}
-                                    <img class="commission-image" src="{{ commission.image_url }}" alt="{{ commission.title }}">
+                                    <img class="commission-image" src="{{ commission.image_url }}" alt="{% if commission.title %}{{ commission.title }}{% else %}Past commission artwork{% endif %}">
                                 {% else %}
-                                    <div class="commission-image-placeholder" role="img" aria-label="Image unavailable for {{ commission.title }}">
+                                    <div class="commission-image-placeholder" role="img" aria-label="{% if commission.title %}Image unavailable for {{ commission.title }}{% else %}Past commission image unavailable{% endif %}">
                                         Image unavailable
                                     </div>
                                 {% endif %}
-                                <div class="commission-copy">
-                                    <h4>{{ commission.title }}</h4>
-                                    <p>{{ commission.description|linebreaksbr }}</p>
-                                </div>
-                            </article>
+                                {% if commission.title or commission.description %}
+                                    <figcaption class="commission-copy">
+                                        {% if commission.title %}<h4>{{ commission.title }}</h4>{% endif %}
+                                        {% if commission.description %}<p>{{ commission.description|linebreaksbr }}</p>{% endif %}
+                                    </figcaption>
+                                {% endif %}
+                            </figure>
                         {% endfor %}
-                    </div>
+                    </section>
                 {% else %}
                     <p class="commission-empty">
                         Past commissions will appear here. You can still share an idea using the enquiry form.

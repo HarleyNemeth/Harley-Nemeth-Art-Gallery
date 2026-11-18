@@ -2,6 +2,27 @@ gsap.registerPlugin(ScrollTrigger)
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    const commissionGallery = document.querySelector('.commission-gallery')
+    if (commissionGallery && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const commissionArtwork = commissionGallery.querySelectorAll('[data-commission-artwork]')
+        gsap.fromTo(
+            commissionArtwork,
+            { autoAlpha: 0, y: 22 },
+            {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.65,
+                stagger: 0.1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: commissionGallery,
+                    start: 'top 85%',
+                    once: true
+                }
+            }
+        )
+    }
+
     const banner = document.querySelector('.banner-container')
     if (banner) {
         const bannerHeight = banner.offsetHeight

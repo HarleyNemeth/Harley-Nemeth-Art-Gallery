@@ -815,25 +815,41 @@ button.btn-primary:focus-visible {
     font-size: 1.05rem;
 }
 
-.commission-list {
+.commission-gallery {
     display: grid;
-    gap: 1.25rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.65rem, 2vw, 1rem);
 }
 
 .commission-card {
+    min-width: 0;
+    margin: 0;
     overflow: hidden;
     border: 1px solid rgba(43, 45, 47, 0.14);
     border-radius: var(--shop-border-radius);
     background-color: #fff;
 }
 
+.commission-card:nth-child(5n + 1) {
+    grid-column: span 2;
+}
+
 .commission-image {
     display: block;
     width: 100%;
-    max-height: 15rem;
     aspect-ratio: 4 / 3;
     object-fit: contain;
     background-color: var(--shop-image-background);
+    transition: transform 0.35s ease;
+}
+
+.commission-card:nth-child(5n + 1) .commission-image {
+    aspect-ratio: 16 / 9;
+}
+
+.commission-card:hover .commission-image,
+.commission-card:focus-within .commission-image {
+    transform: scale(1.025);
 }
 
 .commission-image-placeholder {
@@ -845,10 +861,15 @@ button.btn-primary:focus-visible {
     color: var(--shop-muted-color);
     background-color: var(--shop-image-background);
     font-family: var(--luxury-font);
+    aspect-ratio: 4 / 3;
+}
+
+.commission-card:nth-child(5n + 1) .commission-image-placeholder {
+    aspect-ratio: 16 / 9;
 }
 
 .commission-copy {
-    padding: 1rem 1.1rem 1.25rem;
+    padding: 0.75rem 0.9rem 1rem;
 }
 
 .commission-copy h4 {
@@ -860,7 +881,7 @@ button.btn-primary:focus-visible {
 
 .commission-copy p,
 .commission-empty {
-    margin: 0 0 0.85rem;
+    margin: 0;
     color: var(--shop-muted-color);
     font-size: 1rem;
     line-height: 1.55;
@@ -907,5 +928,16 @@ button.btn-primary:focus-visible {
 @media (max-width: 768px) {
     .contact-layout {
         grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .commission-image {
+        transition: none;
+    }
+
+    .commission-card:hover .commission-image,
+    .commission-card:focus-within .commission-image {
+        transform: none;
     }
 }
