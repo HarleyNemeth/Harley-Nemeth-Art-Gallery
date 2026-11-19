@@ -141,7 +141,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL', 'dracohcn@gmail.com')
+CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL')
 
 # Stripe
 
