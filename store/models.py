@@ -23,12 +23,37 @@ class Artwork(models.Model):
     size = models.CharField(max_length=50, blank=True)
     medium = models.CharField(max_length=100, blank=True)
     stock = models.PositiveIntegerField(default=1)
+    display_order = models.PositiveIntegerField(
+        default=0,
+        help_text="Lower numbers appear first within each availability group.",
+    )
 
     def __str__(self):
         return self.title
 
     class Meta:
         ordering = ['-created_at']
+
+
+class ArtworkImage(models.Model):
+    artwork = models.ForeignKey(
+        Artwork,
+        on_delete=models.CASCADE,
+        related_name="additional_images",
+    )
+    image_url = models.URLField()
+    display_order = models.PositiveIntegerField(
+        default=0,
+        help_text="Lower numbers appear first.",
+    )
+
+    class Meta:
+        ordering = ["display_order", "pk"]
+        verbose_name = "Additional image"
+        verbose_name_plural = "Additional images"
+
+    def __str__(self):
+        return f"{self.artwork.title} image {self.pk or 'new'}"
 
 class AboutSection(models.Model):
     heading = models.CharField(max_length=100, default="About Me")

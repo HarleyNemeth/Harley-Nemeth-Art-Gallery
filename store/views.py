@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Artwork, AboutSection, PastCommission
+from .models import Artwork, AboutSection, Category, PastCommission
 from django.http import JsonResponse
 from django.db import transaction
 from django.conf import settings
@@ -17,28 +17,45 @@ def index(request):
     )
 
 def store(request):
-    artworks = Artwork.objects.select_related('category').all()
+    artworks = Artwork.objects.select_related('category').prefetch_related(
+        'additional_images'
+    )
     artwork_sections = [
         {
             'id': 'available-artworks',
             'heading': 'Available Artwork',
-            'artworks': artworks.filter(available=True, stock__gt=0),
+            'artworks': artworks.filter(
+                available=True,
+                stock__gt=0,
+            ).order_by('display_order', '-created_at', 'pk'),
         },
         {
             'id': 'sold-out-artworks',
             'heading': 'Sold Out',
-            'artworks': artworks.filter(available=True, stock=0),
+            'artworks': artworks.filter(
+                available=True,
+                stock=0,
+            ).order_by('display_order', '-created_at', 'pk'),
         },
         {
             'id': 'not-offered-artworks',
             'heading': 'Not Currently Offered',
-            'artworks': artworks.filter(available=False),
+            'artworks': artworks.filter(
+                available=False,
+            ).order_by('display_order', '-created_at', 'pk'),
         },
     ]
+    categories = Category.objects.filter(
+        artworks__isnull=False
+    ).distinct().order_by('name', 'pk')
     return render(
         request,
         'store/store.html',
-        {'artworks': artworks, 'artwork_sections': artwork_sections},
+        {
+            'artworks': artworks,
+            'artwork_sections': artwork_sections,
+            'categories': categories,
+        },
     )
 
 from django.core.mail import send_mail

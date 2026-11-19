@@ -8,15 +8,16 @@
         <h2>Shop</h2>
 
         <div class="shop-filter" role="group" aria-label="Filter artwork by category">
-            <button type="button" class="filter-btn active" data-filter="all">All</button>
-            <button type="button" class="filter-btn" data-filter="original">Originals</button>
-            <button type="button" class="filter-btn" data-filter="print">Prints</button>
+            <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+            {% for category in categories %}
+                <button type="button" class="filter-btn" data-filter="{{ category.id }}" aria-pressed="false">{{ category.name }}</button>
+            {% endfor %}
         </div>
 
         <section class="gallery" aria-label="Artwork">
             {% for section in artwork_sections %}
                 {% for artwork in section.artworks %}
-                    <article class="art-item" data-category="{{ artwork.category.name|lower }}">
+                    <article class="art-item" data-category="{{ artwork.category_id }}">
                         <div class="gall">
                             {% if artwork.hover_video_url %}
                                 <div class="media-container" data-hover-video="{{ artwork.hover_video_url }}">
@@ -37,9 +38,6 @@
                             {% endif %}
                         </div>
                         <h4 class="art-title">{{ artwork.title }}</h4>
-                        {% if artwork.description %}
-                            <p class="art-description">{{ artwork.description }}</p>
-                        {% endif %}
                         {% if artwork.size or artwork.medium %}
                             <p class="art-meta">{{ artwork.size }}{% if artwork.size and artwork.medium %} · {% endif %}{{ artwork.medium }}</p>
                         {% endif %}
@@ -54,9 +52,79 @@
                         {% else %}
                             <p class="art-status not-offered">Not Currently Available</p>
                         {% endif %}
+                        <button
+                            class="art-details-btn"
+                            type="button"
+                            data-details-trigger
+                            aria-haspopup="dialog"
+                            aria-controls="art-details-panel"
+                            aria-expanded="false"
+                        >View details</button>
+
+                        <template class="art-details-template">
+                            <div class="art-details-content">
+                                <div class="art-details-image-area">
+                                    {% if artwork.image_url %}
+                                        <img class="art-details-main-image" src="{{ artwork.image_url }}" alt="{{ artwork.title }}">
+                                    {% else %}
+                                        <div class="artwork-image-placeholder art-details-main-placeholder" role="img" aria-label="Image unavailable for {{ artwork.title }}">
+                                            <span>Image unavailable</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if artwork.additional_images.all %}
+                                        <div class="art-details-thumbnails" role="group" aria-label="Additional views of {{ artwork.title }}">
+                                            {% if artwork.image_url %}
+                                                <button class="art-details-thumbnail is-active" type="button" aria-label="Show primary image of {{ artwork.title }}" aria-pressed="true">
+                                                    <img src="{{ artwork.image_url }}" alt="">
+                                                </button>
+                                            {% endif %}
+                                            {% for image in artwork.additional_images.all %}
+                                                <button class="art-details-thumbnail{% if not artwork.image_url and forloop.first %} is-active{% endif %}" type="button" aria-label="Show additional image {{ forloop.counter }} of {{ artwork.title }}" aria-pressed="{% if not artwork.image_url and forloop.first %}true{% else %}false{% endif %}">
+                                                    <img src="{{ image.image_url }}" alt="">
+                                                </button>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="art-details-copy">
+                                    <h2 class="art-details-title">{{ artwork.title }}</h2>
+                                    {% if artwork.description %}
+                                        <div class="art-details-description">{{ artwork.description|linebreaksbr }}</div>
+                                    {% endif %}
+                                    {% if artwork.medium %}
+                                        <p><span>Medium</span>{{ artwork.medium }}</p>
+                                    {% endif %}
+                                    {% if artwork.size %}
+                                        <p><span>Size</span>{{ artwork.size }}</p>
+                                    {% endif %}
+                                    <p class="art-details-price">£{{ artwork.price }}</p>
+                                    {% if artwork.available and artwork.stock > 0 %}
+                                        <p class="art-status available-status">Available</p>
+                                    {% elif artwork.available %}
+                                        <p class="art-status sold-out">Sold Out</p>
+                                    {% else %}
+                                        <p class="art-status not-offered">Not Currently Available</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </template>
                     </article>
                 {% endfor %}
             {% endfor %}
+        </section>
+    </div>
+
+    <div class="art-details-overlay" hidden>
+        <section
+            class="art-details-panel"
+            id="art-details-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="art-details-title"
+            tabindex="-1"
+        >
+            <button class="art-details-close" type="button" aria-label="Close artwork details">×</button>
+            <div class="art-details-panel-content"></div>
         </section>
     </div>
 {% endblock %}
