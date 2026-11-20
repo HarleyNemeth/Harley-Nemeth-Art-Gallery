@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <div class="row mt-3">
         <div class="col-12 text-center">
-          <p class="mb-0"><i class="fa-solid fa-palette"></i> &copy; 2026 Nemeth Art</p>
+          <p class="mb-0"><i class="fa-solid fa-palette"></i> 2026 Harley Nemeth Art</p>
         </div>
       </div>
     </div>

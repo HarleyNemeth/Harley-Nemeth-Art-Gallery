@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.validators import MinValueValidator
 class Category(models.Model):
     name = models.CharField(max_length=50)
 
@@ -79,3 +79,63 @@ class PastCommission(models.Model):
 
     def __str__(self):
         return self.title or "Past commission"
+
+class Order(models.Model):
+    #customer details
+    customer_name = models.CharField(max_length=100)
+    customer_email = models.EmailField()
+    customer_phone = models.CharField(max_length=20, blank=True)
+    #delivery address
+    shipping_address = models.CharField(max_length=200)
+    shipping_address_2 = models.CharField(max_length=200, blank=True)
+    shipping_city = models.CharField(max_length=100)
+    shipping_postcode = models.CharField(max_length=20)
+    shipping_country = models.CharField(max_length=100)
+    #order date
+    created_at = models.DateTimeField(auto_now_add=True)
+    #financial details
+    subtotal = models.DecimalField(max_digits=8, decimal_places=2)
+    shipping_cost = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    total = models.DecimalField(max_digits=8, decimal_places=2)
+    #payment status
+    PAYMENT_STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('paid', 'Paid'),
+        ('failed', 'Failed'),
+        ('refunded', 'Refunded'),
+    ]
+    payment_status = models.CharField(
+        max_length=20,
+        choices=PAYMENT_STATUS_CHOICES,
+        default='pending',
+    )
+    #fulfillment status
+    FULFILLMENT_STATUS_CHOICES = [
+        ('processing', 'Processing'),
+        ('shipped', 'Shipped'),
+        ('delivered', 'Delivered'),
+        ('cancelled', 'Cancelled'),
+    ]
+    fulfillment_status = models.CharField(
+        max_length=20,
+        choices=FULFILLMENT_STATUS_CHOICES,
+        default='processing',
+    )
+
+    #stripe references
+    stripe_session_id = models.CharField(max_length=255, blank=True)
+    stripe_payment_intent_id = models.CharField(max_length=255, blank=True)
+
+
+    def __str__(self):
+        return f"Order #{self.pk}"
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    artwork = models.ForeignKey(Artwork, on_delete=models.PROTECT, related_name='order_items')
+    artwork_title = models.CharField(max_length=200)
+    quantity = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
+    unit_price = models.DecimalField(max_digits=8, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.quantity} x {self.artwork_title} in Order #{self.order.pk}"
